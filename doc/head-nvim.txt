@@ -1,0 +1,126 @@
+*head-nvim.txt*    For Neovim version 0.5+    Last change: 2024 June 22
+
+                        HEAD.NVIM REFERENCE MANUAL
+
+==============================================================================
+CONTENTS                                                   *head-nvim-contents*
+
+    1. Introduction ........................... |head-nvim-introduction|
+    2. Configuration .......................... |head-nvim-configuration|
+    3. Commands ............................... |head-nvim-commands|
+    4. Header Symbols ......................... |head-nvim-symbols|
+    5. Customizing Headers .................... |head-nvim-customizing|
+    6. Git Integration ........................ |head-nvim-git|
+
+==============================================================================
+1. Introduction                                         *head-nvim-introduction*
+
+head.nvim is a Neovim plugin for managing file headers. It allows you to
+automatically add and update file headers with customizable formats for
+different file types.
+
+==============================================================================
+2. Configuration                                       *head-nvim-configuration*
+
+To configure head.nvim, add the following to your Neovim configuration:
+>
+    require('head').setup({
+        -- Your configuration options here
+    })
+<
+Default configuration:
+>
+    {
+        auto_update = false,
+        auto_add = false,
+        date_format = '%m/%d/%y',
+        user = 'username',
+        name = 'name',
+        email = 'e@mail.com',
+        git = {
+            enabled = true,
+            bin = 'git',
+        },
+        header = {
+            default = {
+                '',
+                '  @%f',
+                '  @%p',
+                '',
+                '  Created by @%n on @%dc',
+                '',
+            },
+            -- Add other language-specific headers here
+        },
+    }
+<
+==============================================================================
+3. Commands                                               *head-nvim-commands*
+
+The following commands are available in head.nvim:
+
+Command              Action
+-------------------  --------------------------------------------------
+:HeadUpdate          Updates header or adds a new one to current file
+:HeadRemove          Removes header currently in the file, if it has one
+:HeadCheck           Checks if current file has a header
+:HeadGet             Displays the header in the current file, if it has one
+:HeadConfig          Prints all defined header formats in your plugin config
+:HeadConfigCurrent   Prints the header format for the current file type
+:HeadSymbols         Prints the symbol key for header formats
+
+==============================================================================
+4. Header Symbols                                         *head-nvim-symbols*
+
+The following symbols can be used in header formats:
+
+Symbol  Description           Example
+------  --------------------  --------------------------
+@%na    name                  First Last
+@%us    username              username
+@%em    email                 e@mail.com
+@%fi    file                  file.txt
+@%fp    first parent folder   folder/
+@%pr    project               project/
+@%pa    path                  project/folder/file.txt
+@%dc    created date          01/01/01
+@%dm    modified date         01/01/01
+
+Use the :HeadSymbols command to view this list in Neovim.
+
+==============================================================================
+5. Customizing Headers                                 *head-nvim-customizing*
+
+You can customize headers for specific file types in your configuration:
+>
+    require('head').setup({
+        header = {
+            default = { ... },
+            rs = {
+                '+ ----------------- +',
+                '+ @%fi +',
+                '+ @%pr +',
+                '',
+                '+ Created: @%dc +',
+                '+ Modified: @%dm +',
+                '+ ----------------- +',
+            },
+            -- Add more file type specific headers here
+        },
+    })
+<
+==============================================================================
+6. Git Integration                                           *head-nvim-git*
+
+When git integration is enabled, the plugin will use git config for user
+information. Enable it in your configuration:
+>
+    require('head').setup({
+        git = {
+            enabled = true,
+            bin = 'git',
+        },
+    })
+<
+==============================================================================
+vim:ft=help:norl:ts=8:sw=8:sts=8:
