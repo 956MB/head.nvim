@@ -53,19 +53,24 @@ _Image to be added here :(_
 
 ```lua
 {
+    -- Automatically updates info within the header when saving the file
     auto_update = false,
+    -- Automatically adds a header to a new file when creating it or when opening a file without a header
     auto_add = false,
-    date_format = '%m/%d/%y',
+    -- Format used for the `@%dc` and `@%dm` symbols (date_created and date_modified)
+    date_format = '%m/%d/%y', -- other formats: '%m/%d/%y %H:%M:%S', '%Y-%m-%d %H:%M:%S'
+    -- 'Backup' or manually set username, name, and email
     user = 'username',
     name = 'name',
     email = 'e@mail.com',
+    -- Used later for calling the git command and getting various infos
     git = {
         enabled = true,
         bin = 'git',
     },
+    -- Object containing the default header format and ones for each filetype
     header = {
-        -- The default format matches the header given to files in Xcode...
-        -- but you can change this to anything you like.
+        -- `default` used as the fallback for all filetypes, other files types can be added here with `ft = { ... }` -> `lua = { ... }`
         default = {
             '',
             '  @%fi',
@@ -74,9 +79,24 @@ _Image to be added here :(_
             '  Created by @%na on @%dc',
             '',
         },
-        -- Add other language-specific headers here
     },
+
 }
+```
+
+## Keymaps
+
+```lua
+-- You can set up keymaps in the most basic way like this, or however you prefer:
+vim.keymap.set('n', '<leader>hu', '<cmd>HeadUpdate<cr>', { desc = '[U]pdate [H]eader (add if missing)' })
+vim.keymap.set('n', '<leader>hr', '<cmd>HeadRemove<cr>', { desc = '[R]emove [H]eader' })
+vim.keymap.set('n', '<leader>hc', '<cmd>HeadCheck<cr>', { desc = '[C]heck if current file has a [H]eader' })
+
+-- The other commands don't really need keymaps, but you can set them up if you want:
+-- vim.keymap.set('n', '<leader>hg', '<cmd>HeadGet<cr>', { desc = '[G]et current file [H]eader' })
+-- vim.keymap.set('n', '<leader>hs', '<cmd>HeadSymbols<cr>', { desc = '[S]how [H]eader symbols list' })
+-- vim.keymap.set('n', '<leader>hc', '<cmd>HeadConfig<cr>', { desc = 'Get [H]eader [C]onfig (all)' })
+-- vim.keymap.set('n', '<leader>hc', '<cmd>HeadConfigCurrent<cr>', { desc = 'Get [H]eader [C]onfig (current file type)' })
 ```
 
 ## Usage

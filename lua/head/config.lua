@@ -1,28 +1,24 @@
 local M = {}
 
 M.config = {
+    -- Automatically updates info within the header when saving the file
     auto_update = false,
+    -- Automatically adds a header to a new file when creating it or when opening a file without a header
     auto_add = false,
+    -- Format used for the `@%dc` and `@%dm` symbols (date_created and date_modified)
     date_format = '%m/%d/%y', -- other formats: '%m/%d/%y %H:%M:%S', '%Y-%m-%d %H:%M:%S'
-
+    -- 'Backup' or manually set username, name, and email
     user = 'username',
     name = 'name',
     email = 'e@mail.com',
-
+    -- Used later for calling the git command and getting various infos
     git = {
         enabled = true,
         bin = 'git',
     },
-
-    -- TODO: Util
-    --    @%m:     margin
-    --      - fills space up to the max width line with spaces " "
-    --    @%r(s):  repeat(symbol)
-    --      - (works like margin) repeating symbol fills the line full width, rather than a set amount of characters like "+ --- +" (which is 3 only)
-    --    @%rc(s,c): repeat_count(symbol, count)
-    --      - repeats the symbol a set amount of times, like "+ --- +": @%rc(-, 3)
-
+    -- Object containing the default header format and ones for each filetype
     header = {
+        -- `default` used as the fallback for all filetypes, other files types can be added here with `ft = { ... }` -> `lua = { ... }`
         default = {
             '',
             '  @%fi',
@@ -30,19 +26,6 @@ M.config = {
             '',
             '  Created by @%na on @%dc',
             '',
-        },
-        test = {
-            '+ ----------------- +',
-            '+ @%na +',
-            '+ @%us +',
-            '+ @%em +',
-            '+ @%fi +',
-            '+ @%fp +',
-            '+ @%pr +',
-            '+ @%pa +',
-            '+ @%dc +',
-            '+ @%dm +',
-            '+ ----------------- +',
         },
     },
 }
