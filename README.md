@@ -68,10 +68,10 @@ _Image to be added here :(_
         -- but you can change this to anything you like.
         default = {
             '',
-            '  @%f',
-            '  @%p',
+            '  @%fi',
+            '  @%pr',
             '',
-            '  Created by @%n on @%dc',
+            '  Created by @%na on @%dc',
             '',
         },
         -- Add other language-specific headers here
